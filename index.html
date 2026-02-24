@@ -60,9 +60,10 @@ button:hover{
 <h2>Certificado de Última Mantención</h2>
 
 <form id="form">
+
 <input
  id="patente"
- placeholder="Patente (ABC123)"
+ placeholder="Patente (ABCD12)"
  required
  maxlength="6"
 />
@@ -86,26 +87,28 @@ button:hover{
 // 🔥 CAMBIA ESTA URL
 const WEBHOOK_URL = "https://uncollapsible-melodiously-chung.ngrok-free.dev/webhook-test/certificado";
 
-// limpiar patente
-function normalizarPatente(valor){
 
+// normalizar patente
+function normalizarPatente(valor){
   return valor
     .toUpperCase()
-    .replace(/[^A-Z0-9]/g,'') // elimina puntos, espacios, guiones
+    .replace(/[^A-Z0-9]/g,'')
     .slice(0,6);
 }
 
-// validar formato chileno ABC123
-function patenteValida(p){
 
-  return /^[A-Z]{3}[0-9]{3}$/.test(p);
+// ✅ VALIDACIÓN CHILENA AAAA11
+function patenteValida(p){
+  return /^[A-Z]{4}[0-9]{2}$/.test(p);
 }
+
 
 // escribir mientras usuario escribe
 document.getElementById("patente")
 .addEventListener("input",(e)=>{
   e.target.value = normalizarPatente(e.target.value);
 });
+
 
 document.getElementById("form")
 .addEventListener("submit", async(e)=>{
@@ -121,7 +124,7 @@ let patente = normalizarPatente(
 let correo = document.getElementById("correo").value;
 
 if(!patenteValida(patente)){
-  msg.innerHTML="❌ Patente inválida (Ej: ABC123)";
+  msg.innerHTML="❌ Patente inválida (Ej: ABCD12)";
   return;
 }
 
