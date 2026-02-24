@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Certificado de Última Mantención</title>
+
+<style>
+body{
+  font-family: Arial;
+  background:#f4f6f8;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.card{
+  background:white;
+  padding:30px;
+  border-radius:10px;
+  width:350px;
+  box-shadow:0 5px 20px rgba(0,0,0,.1);
+}
+
+h2{
+  text-align:center;
+}
+
+input,button{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
+
+button{
+  background:#007bff;
+  color:white;
+  border:none;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#0056b3;
+}
+
+.msg{
+  margin-top:15px;
+  text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h2>Certificado de Última Mantención</h2>
+
+<form id="form">
+<input
+ id="patente"
+ placeholder="Patente (ABC123)"
+ required
+ maxlength="6"
+/>
+
+<input
+ id="correo"
+ type="email"
+ placeholder="Correo electrónico"
+ required
+/>
+
+<button type="submit">Enviar solicitud</button>
+
+<div class="msg" id="msg"></div>
+
+</form>
+</div>
+
+<script>
+
+// 🔥 CAMBIA ESTA URL
+const WEBHOOK_URL = "https://TU-N8N/webhook/certificado";
+
+// limpiar patente
+function normalizarPatente(valor){
+
+  return valor
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g,'') // elimina puntos, espacios, guiones
+    .slice(0,6);
+}
+
+// validar formato chileno ABC123
+function patenteValida(p){
+
+  return /^[A-Z]{3}[0-9]{3}$/.test(p);
+}
+
+// escribir mientras usuario escribe
+document.getElementById("patente")
+.addEventListener("input",(e)=>{
+  e.target.value = normalizarPatente(e.target.value);
+});
+
+document.getElementById("form")
+.addEventListener("submit", async(e)=>{
+
+e.preventDefault();
+
+const msg = document.getElementById("msg");
+
+let patente = normalizarPatente(
+  document.getElementById("patente").value
+);
+
+let correo = document.getElementById("correo").value;
+
+if(!patenteValida(patente)){
+  msg.innerHTML="❌ Patente inválida (Ej: ABC123)";
+  return;
+}
+
+msg.innerHTML="⏳ Enviando...";
+
+try{
+
+await fetch(WEBHOOK_URL,{
+  method:"POST",
+  headers:{
+    "Content-Type":"application/json"
+  },
+  body:JSON.stringify({
+    patente,
+    correo
+  })
+});
+
+msg.innerHTML="✅ Solicitud enviada correctamente";
+
+document.getElementById("form").reset();
+
+}catch(err){
+
+msg.innerHTML="❌ Error al enviar";
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
