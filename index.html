@@ -1,222 +1,289 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carflex | Certificado de Mantención</title>
-    <style>
-        :root {
-            --primary: #ff7225;
-            --primary-dark: #e65a15;
-            --dark-blue: #033201; /* Color adaptado de tu logo */
-            --white: #ffffff;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<title>Solicitud de Certificado</title>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            position: relative;
-        }
+<style>
 
-        /* Fondo con imagen */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: url('fondo formulario.jpg') no-repeat center center;
-            background-size: cover;
-            filter: brightness(0.6) blur(3px); /* Oscurece y desenfoca el fondo */
-            z-index: -1;
-        }
+:root{
+    --primary:#ff7225;
+    --primary-dark:#e65a15;
+}
 
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 15px;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            text-align: center;
-            backdrop-filter: blur(5px);
-        }
+/* RESET */
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
-        .logo {
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            display: block;
-        }
+body{
+    font-family:Segoe UI, Tahoma, sans-serif;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+}
 
-        .logo span:nth-child(1), .logo span:nth-child(2), .logo span:nth-child(3) { color: #033201; }
-        .logo span:nth-child(4) { color: #820889; }
-        .logo span:nth-child(5) { color: #0dc5aa; }
-        .logo span:nth-child(6) { color: #ff7225; }
-        .logo span:nth-child(7) { color: #ffae17; }
+/* FONDO */
+body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:url('fondo formulario.jpg') center/cover no-repeat;
+    filter:brightness(.55) blur(4px);
+    z-index:-1;
+}
 
-        h2 {
-            color: #444;
-            font-size: 1.2rem;
-            margin-bottom: 25px;
-            font-weight: 400;
-        }
+/* CARD */
+.card{
+    background:rgba(255,255,255,.96);
+    padding:40px;
+    border-radius:16px;
+    width:100%;
+    max-width:420px;
+    box-shadow:0 20px 40px rgba(0,0,0,.25);
+    text-align:center;
+    backdrop-filter:blur(6px);
+    transition:.4s;
+}
 
-        .input-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
+h2{
+    font-weight:600;
+    margin-bottom:25px;
+    color:#333;
+}
 
-        label {
-            font-size: 12px;
-            font-weight: bold;
-            color: #666;
-            text-transform: uppercase;
-            margin-left: 5px;
-        }
+/* INPUTS */
+.input-group{
+    margin-bottom:15px;
+    text-align:left;
+}
 
-        input {
-            width: 100%;
-            padding: 14px;
-            margin-top: 5px;
-            border-radius: 8px;
-            border: 2px solid #eee;
-            font-size: 16px;
-            transition: border-color 0.3s;
-            outline: none;
-        }
+label{
+    font-size:12px;
+    font-weight:bold;
+    color:#666;
+    text-transform:uppercase;
+}
 
-        input:focus {
-            border-color: var(--primary);
-        }
+input{
+    width:100%;
+    padding:14px;
+    margin-top:6px;
+    border-radius:8px;
+    border:2px solid #eee;
+    font-size:16px;
+    outline:none;
+    transition:.3s;
+}
 
-        button {
-            width: 100%;
-            padding: 15px;
-            margin-top: 10px;
-            border-radius: 8px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.2s;
-        }
+input:focus{
+    border-color:var(--primary);
+}
 
-        button:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
+/* BOTONES */
+button{
+    width:100%;
+    padding:15px;
+    margin-top:15px;
+    border-radius:8px;
+    border:none;
+    background:var(--primary);
+    color:#fff;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
 
-        button:active {
-            transform: translateY(0);
-        }
+button:hover{
+    background:var(--primary-dark);
+    transform:translateY(-2px);
+}
 
-        .msg {
-            margin-top: 20px;
-            font-size: 14px;
-            padding: 10px;
-            border-radius: 5px;
-            display: none;
-        }
+/* MENSAJES */
+.msg{
+    margin-top:18px;
+    font-size:14px;
+}
 
-        .status-loading { color: #666; display: block; }
-        .status-success { background: #d4edda; color: #155724; display: block; }
-        .status-error { background: #f8d7da; color: #721c24; display: block; }
-    </style>
+.loading{color:#666;}
+.error{
+    background:#f8d7da;
+    color:#721c24;
+    padding:12px;
+    border-radius:8px;
+}
+
+/* PANTALLA EXITO */
+.success-screen{
+    display:none;
+    text-align:center;
+}
+
+.success-icon{
+    font-size:48px;
+    margin-bottom:15px;
+}
+
+.success-screen h3{
+    color:#155724;
+    margin-bottom:10px;
+}
+
+.success-screen p{
+    color:#555;
+    margin-bottom:20px;
+}
+
+.btn-secondary{
+    background:#333;
+}
+
+.btn-secondary:hover{
+    background:#111;
+}
+
+.fade{
+    animation:fade .4s ease;
+}
+
+@keyframes fade{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+</style>
 </head>
+
 <body>
 
 <div class="card">
-    <div class="logo">
-        <span>C</span><span>A</span><span>R</span><span>F</span><span>L</span><span>E</span><span>X</span>
-    </div>
-    <h2>Certificado de Mantención</h2>
 
-    <form id="form">
-        <div class="input-group">
-            <label for="patente">Patente</label>
-            <input id="patente" placeholder="Ej: ABCD12" required maxlength="6" autocomplete="off">
-        </div>
+<!-- FORMULARIO -->
+<div id="form-screen" class="fade">
 
-        <div class="input-group">
-            <label for="correo">Correo Electrónico</label>
-            <input id="correo" type="email" placeholder="tu@correo.com" required>
-        </div>
+<h2>Solicitar Certificado de Última Mantención</h2>
 
-        <button type="submit" id="btn-submit">Enviar Solicitud</button>
-        <div class="msg" id="msg"></div>
-    </form>
+<form id="form">
+
+<div class="input-group">
+<label>Patente</label>
+<input id="patente" placeholder="Ej: ABCD12" maxlength="6" required autocomplete="off">
+</div>
+
+<div class="input-group">
+<label>Correo Electrónico</label>
+<input id="correo" type="email" placeholder="tu@correo.com" required>
+</div>
+
+<button type="submit" id="btn-submit">
+Enviar Solicitud
+</button>
+
+<div id="msg" class="msg"></div>
+
+</form>
+</div>
+
+<!-- EXITO -->
+<div id="success-screen" class="success-screen fade">
+
+<div class="success-icon">✅</div>
+
+<h3>Solicitud enviada correctamente</h3>
+
+<p>
+Hemos enviado el certificado al correo:<br>
+<strong id="correo-confirmado"></strong>
+</p>
+
+<button class="btn-secondary" onclick="resetForm()">
+Solicitar otro certificado
+</button>
+
+</div>
+
 </div>
 
 <script>
-    // Asegúrate de que esta URL sea la de producción si ya no usas ngrok-test
-    const WEBHOOK_URL = "https://uncollapsible-melodiously-chung.ngrok-free.dev/webhook-test/certificado";
 
-    function normalizarPatente(valor) {
-        return valor.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
-    }
+const WEBHOOK_URL="https://uncollapsible-melodiously-chung.ngrok-free.dev/webhook-test/certificado";
 
-    function patenteValida(p) {
-        // Acepta formato nuevo (AAAA11) y antiguo (AA1111)
-        return /^[A-Z]{4}[0-9]{2}$/.test(p) || /^[A-Z]{2}[0-9]{4}$/.test(p);
-    }
+function normalizarPatente(v){
+    return v.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,6);
+}
 
-    const inputPatente = document.getElementById("patente");
-    inputPatente.addEventListener("input", (e) => {
-        e.target.value = normalizarPatente(e.target.value);
-    });
+function patenteValida(p){
+    return /^[A-Z]{4}[0-9]{2}$/.test(p) ||
+           /^[A-Z]{2}[0-9]{4}$/.test(p);
+}
 
-    document.getElementById("form").addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const msg = document.getElementById("msg");
-        const btn = document.getElementById("btn-submit");
-        const patente = inputPatente.value;
-        const correo = document.getElementById("correo").value;
+const inputPatente=document.getElementById("patente");
 
-        if (!patenteValida(patente)) {
-            msg.className = "msg status-error";
-            msg.innerHTML = "❌ Formato de patente inválido";
-            return;
-        }
+inputPatente.addEventListener("input",e=>{
+    e.target.value=normalizarPatente(e.target.value);
+});
 
-        msg.className = "msg status-loading";
-        msg.innerHTML = "⏳ Procesando solicitud...";
-        btn.disabled = true;
-        btn.style.opacity = "0.7";
+document.getElementById("form").addEventListener("submit",async e=>{
 
-        try {
-            const response = await fetch(WEBHOOK_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ patente, correo })
-            });
+e.preventDefault();
 
-            if (response.ok) {
-                msg.className = "msg status-success";
-                msg.innerHTML = "✅ ¡Listo! Recibirás el PDF en tu correo.";
-                document.getElementById("form").reset();
-            } else {
-                throw new Error();
-            }
-        } catch (err) {
-            msg.className = "msg status-error";
-            msg.innerHTML = "❌ Error de conexión. Reintente más tarde.";
-        } finally {
-            btn.disabled = false;
-            btn.style.opacity = "1";
-        }
-    });
+const msg=document.getElementById("msg");
+const btn=document.getElementById("btn-submit");
+
+const patente=inputPatente.value;
+const correo=document.getElementById("correo").value;
+
+if(!patenteValida(patente)){
+    msg.className="msg error";
+    msg.innerHTML="Formato de patente inválido";
+    return;
+}
+
+msg.className="msg loading";
+msg.innerHTML="Procesando solicitud...";
+btn.disabled=true;
+
+try{
+
+const response=await fetch(WEBHOOK_URL,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({patente,correo})
+});
+
+if(!response.ok) throw new Error();
+
+document.getElementById("correo-confirmado").textContent=correo;
+
+document.getElementById("form-screen").style.display="none";
+document.getElementById("success-screen").style.display="block";
+
+}catch(err){
+
+msg.className="msg error";
+msg.innerHTML="Error de conexión. Intente nuevamente.";
+
+}
+
+btn.disabled=false;
+
+});
+
+/* RESET UX */
+function resetForm(){
+document.getElementById("form").reset();
+document.getElementById("success-screen").style.display="none";
+document.getElementById("form-screen").style.display="block";
+document.getElementById("msg").innerHTML="";
+}
+
 </script>
 
 </body>
