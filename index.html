@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -86,7 +87,7 @@ label{
     letter-spacing:.5px;
 }
 
-input{
+input, select{
     width:100%;
     padding:14px;
     margin-top:6px;
@@ -95,9 +96,10 @@ input{
     font-size:15px;
     outline:none;
     transition:.3s;
+    background:#fff;
 }
 
-input:focus{
+input:focus, select:focus{
     border-color:var(--primary);
 }
 
@@ -184,6 +186,7 @@ button:disabled{
 }
 
 </style>
+
 </head>
 
 <body>
@@ -191,13 +194,14 @@ button:disabled{
 <div class="card">
 
 <!-- FORMULARIO -->
+
 <div id="form-screen">
 
 <img src="Logo carflex.jpg" class="logo" alt="Carflex">
 
 <h2>Portal de Certificados</h2>
 <p class="subtitle">
-Solicite su certificado de última mantención ingresando la patente y su correo electrónico.
+Solicite su certificado ingresando la patente, su correo electrónico y el tipo de documento requerido.
 </p>
 
 <form id="form">
@@ -212,6 +216,16 @@ Solicite su certificado de última mantención ingresando la patente y su correo
 <input id="correo" type="email" placeholder="ejemplo@correo.com" required>
 </div>
 
+<div class="input-group">
+<label>Tipo de Documento</label>
+<select id="tipo" required>
+    <option value="">Seleccione una opción</option>
+    <option value="SOAP">SOAP</option>
+    <option value="PC">Permiso de Circulación</option>
+    <option value="MANTENCION">Certificado Última Mantención</option>
+</select>
+</div>
+
 <button type="submit" id="btn-submit">
 Solicitar Certificado
 </button>
@@ -222,6 +236,7 @@ Solicitar Certificado
 </div>
 
 <!-- EXITO -->
+
 <div id="success-screen" class="success-screen">
 
 <div class="success-icon">✅</div>
@@ -270,10 +285,17 @@ const btn=document.getElementById("btn-submit");
 
 const patente=inputPatente.value;
 const correo=document.getElementById("correo").value;
+const tipo=document.getElementById("tipo").value;
 
 if(!patenteValida(patente)){
     msg.className="msg error";
     msg.innerHTML="Formato de patente inválido.";
+    return;
+}
+
+if(!tipo){
+    msg.className="msg error";
+    msg.innerHTML="Debe seleccionar un tipo de documento.";
     return;
 }
 
@@ -286,7 +308,7 @@ try{
 const response=await fetch(WEBHOOK_URL,{
 method:"POST",
 headers:{"Content-Type":"application/json"},
-body:JSON.stringify({patente,correo})
+body:JSON.stringify({patente,correo,tipo})
 });
 
 if(!response.ok) throw new Error();
@@ -317,3 +339,4 @@ document.getElementById("msg").innerHTML="";
 
 </body>
 </html>
+
