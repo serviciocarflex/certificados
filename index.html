@@ -11,7 +11,6 @@
             --text: #1f2937;
             --muted: #6b7280;
             --green: #4CAF50;
-            --green-light: #e8f5e9;
             --border: #e5e7eb;
         }
 
@@ -23,7 +22,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Roboto, sans-serif;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -55,35 +54,30 @@
             animation: fade .4s ease-out;
         }
 
-        /* LOGO */
         .logo {
             width: 160px;
             margin-bottom: 20px;
         }
 
-        /* TITULOS */
         h2 {
             font-weight: 700;
             margin-bottom: 8px;
             color: var(--text);
-            letter-spacing: -0.5px;
         }
 
         .subtitle {
             font-size: 14px;
             color: var(--muted);
             margin-bottom: 25px;
-            line-height: 1.5;
         }
 
-        /* INPUTS */
+        /* INPUTS PRINCIPALES */
         .input-group {
             margin-bottom: 20px;
             text-align: left;
         }
 
-        /* Label principal (Patente, Correo) */
-        .input-group > label {
+        .input-group > span {
             font-size: 11px;
             font-weight: 700;
             color: var(--muted);
@@ -101,7 +95,6 @@
             font-size: 15px;
             outline: none;
             transition: all .3s;
-            background: #fff;
         }
 
         input:focus {
@@ -109,7 +102,7 @@
             box-shadow: 0 0 0 4px rgba(255, 114, 37, 0.1);
         }
 
-        /* SECCIÓN CHECKBOXES CORREGIDA */
+        /* --- FILAS DE CHECKBOX CLIQUEABLES --- */
         .checkbox-list {
             list-style: none;
             padding: 0;
@@ -117,75 +110,85 @@
         }
 
         .checkbox-item {
-            display: flex;
-            align-items: center; /* ALINEACIÓN VERTICAL PERFECTA */
-            padding: 10px 12px;
             margin-bottom: 8px;
-            border-radius: 10px;
-            transition: background 0.2s;
+        }
+
+        /* El label ahora envuelve a todo, lo que lo hace cliqueable */
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
             cursor: pointer;
-            border: 1px solid transparent;
+            transition: all 0.2s ease;
+            user-select: none; /* Evita que se seleccione el texto al hacer clic rápido */
         }
 
-        .checkbox-item:hover {
-            background: #f9fafb;
-            border-color: var(--border);
+        .checkbox-label:hover {
+            background-color: #f9fafb;
+            border-color: #d1d5db;
         }
 
-        /* Estilo del cuadradito (input) */
-        .checkbox-item input[type=checkbox] {
-            appearance: none;
-            -webkit-appearance: none;
+        /* Estilo cuando el checkbox interno está marcado */
+        .checkbox-item input[type="checkbox"]:checked + .checkbox-label {
+            border-color: var(--green);
+            background-color: #f0fdf4; /* Un verde muy clarito de fondo */
+        }
+
+        /* Ocultamos el checkbox real pero mantenemos su funcionalidad */
+        .checkbox-item input[type="checkbox"] {
+            display: none;
+        }
+
+        /* Creamos nuestro propio cuadradito visual */
+        .custom-box {
             width: 20px;
             height: 20px;
             border: 2px solid #d1d5db;
             border-radius: 6px;
-            margin-right: 12px; /* Espacio entre cuadro y texto */
-            cursor: pointer;
-            position: relative;
+            margin-right: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
             transition: all 0.2s;
-            background: #fff;
-            flex-shrink: 0; /* Evita que el cuadro se achique */
+            background: white;
         }
 
-        .checkbox-item input[type=checkbox]:checked {
-            background: var(--green);
+        /* Estilo del cuadradito cuando está marcado */
+        .checkbox-item input[type="checkbox"]:checked + .checkbox-label .custom-box {
+            background-color: var(--green);
             border-color: var(--green);
         }
 
-        /* La marca de "Check" */
-        .checkbox-item input[type=checkbox]:checked::after {
+        /* El check (v) blanco */
+        .custom-box::after {
             content: "";
             width: 5px;
             height: 10px;
             border: solid white;
             border-width: 0 2px 2px 0;
             transform: rotate(45deg);
-            position: absolute;
+            display: none;
             margin-bottom: 2px;
         }
 
-        /* Estilo del texto al lado del checkbox */
-        .checkbox-item label {
+        .checkbox-item input[type="checkbox"]:checked + .checkbox-label .custom-box::after {
+            display: block;
+        }
+
+        .label-text {
             font-size: 14px;
             font-weight: 500;
             color: var(--text);
-            text-transform: none; /* Quita las mayúsculas */
-            letter-spacing: 0;
-            margin-bottom: 0; /* Elimina el margen inferior heredado */
-            cursor: pointer;
-            user-select: none;
-            display: inline-block;
         }
 
         /* BOTONES */
         button {
             width: 100%;
             padding: 16px;
-            margin-top: 10px;
+            margin-top: 15px;
             border-radius: 12px;
             border: none;
             background: var(--primary);
@@ -194,87 +197,23 @@
             font-weight: 600;
             cursor: pointer;
             transition: all .3s;
-            box-shadow: 0 4px 6px rgba(255, 114, 37, 0.2);
         }
 
-        button:hover {
-            background: var(--primary-dark);
-            transform: translateY(-1px);
-            box-shadow: 0 6px 12px rgba(255, 114, 37, 0.3);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        button:disabled {
-            opacity: .6;
-            cursor: not-allowed;
-            transform: none;
-        }
+        button:hover { background: var(--primary-dark); transform: translateY(-1px); }
+        button:disabled { opacity: .6; cursor: not-allowed; }
 
         /* MENSAJES */
-        .msg {
-            margin-top: 18px;
-            font-size: 14px;
-            min-height: 20px;
-        }
-
-        .loading { color: var(--muted); }
-
-        .error {
-            background: #fef2f2;
-            color: #b91c1c;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid #fee2e2;
-        }
+        .msg { margin-top: 18px; font-size: 14px; min-height: 20px; }
+        .error { background: #fef2f2; color: #b91c1c; padding: 12px; border-radius: 10px; border: 1px solid #fee2e2; }
 
         /* EXITO */
-        .success-screen {
-            display: none;
-            text-align: center;
-        }
+        .success-screen { display: none; text-align: center; }
+        .success-icon { font-size: 60px; margin-bottom: 20px; display: block; }
+        .btn-secondary { background: #374151; }
 
-        .success-icon {
-            font-size: 60px;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .success-screen h3 {
-            color: #065f46;
-            margin-bottom: 12px;
-            font-size: 20px;
-        }
-
-        .success-screen p {
-            color: var(--muted);
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-
-        .btn-secondary {
-            background: #374151;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .btn-secondary:hover {
-            background: #111827;
-        }
-
-        /* ANIMACION */
         @keyframes fade {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* RESPONSIVE */
-        @media(max-width:480px) {
-            .card {
-                padding: 30px 20px;
-                max-width: 90%;
-            }
         }
     </style>
 </head>
@@ -284,35 +223,42 @@
     <div id="form-screen">
         <img src="Logo carflex.jpg" class="logo" alt="Carflex">
         <h2>Portal de Documentos</h2>
-        <p class="subtitle">
-            Solicite su documento ingresando la patente, su correo electrónico y el tipo de documento requerido.
-        </p>
+        <p class="subtitle">Ingrese los datos para solicitar su certificado.</p>
 
         <form id="form">
             <div class="input-group">
-                <label>Patente</label>
+                <span>Patente</span>
                 <input id="patente" type="text" placeholder="Ej: AB123C" maxlength="6" required autocomplete="off">
             </div>
 
             <div class="input-group">
-                <label>Correo Electrónico</label>
+                <span>Correo Electrónico</span>
                 <input id="correo" type="email" placeholder="ejemplo@correo.com" required>
             </div>
 
             <div class="input-group">
-                <label>Tipo de Documento</label>
+                <span>Tipo de Documento</span>
                 <ul class="checkbox-list">
                     <li class="checkbox-item">
                         <input type="checkbox" id="tipoSOAP" name="tipo" value="SOAP">
-                        <label for="tipoSOAP">SOAP</label>
+                        <label for="tipoSOAP" class="checkbox-label">
+                            <div class="custom-box"></div>
+                            <span class="label-text">SOAP</span>
+                        </label>
                     </li>
                     <li class="checkbox-item">
                         <input type="checkbox" id="tipoPC" name="tipo" value="PC">
-                        <label for="tipoPC">Permiso de Circulación</label>
+                        <label for="tipoPC" class="checkbox-label">
+                            <div class="custom-box"></div>
+                            <span class="label-text">Permiso de Circulación</span>
+                        </label>
                     </li>
                     <li class="checkbox-item">
                         <input type="checkbox" id="tipoMANT" name="tipo" value="MANTENCION">
-                        <label for="tipoMANT">Certificado Última Mantención</label>
+                        <label for="tipoMANT" class="checkbox-label">
+                            <div class="custom-box"></div>
+                            <span class="label-text">Certificado Última Mantención</span>
+                        </label>
                     </li>
                 </ul>
             </div>
@@ -333,27 +279,16 @@
 <script>
     const WEBHOOK_URL = "https://uncollapsible-melodiously-chung.ngrok-free.dev/webhook/certificado";
 
-    function normalizarPatente(v) {
-        return v.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
-    }
-
-    function patenteValida(p) {
-        return /^[A-Z]{4}[0-9]{2}$/.test(p) ||
-               /^[A-Z]{2}[0-9]{4}$/.test(p) ||
-               /^[A-Z]{2}[0-9]{2}[A-Z]{2}$/.test(p);
-    }
+    function normalizarPatente(v) { return v.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6); }
+    function patenteValida(p) { return /^[A-Z]{4}[0-9]{2}$/.test(p) || /^[A-Z]{2}[0-9]{4}$/.test(p) || /^[A-Z]{2}[0-9]{2}[A-Z]{2}$/.test(p); }
 
     const inputPatente = document.getElementById("patente");
-    inputPatente.addEventListener("input", e => { 
-        e.target.value = normalizarPatente(e.target.value); 
-    });
+    inputPatente.addEventListener("input", e => { e.target.value = normalizarPatente(e.target.value); });
 
     document.getElementById("form").addEventListener("submit", async e => {
         e.preventDefault();
-
         const msg = document.getElementById("msg");
         const btn = document.getElementById("btn-submit");
-
         const patente = inputPatente.value;
         const correo = document.getElementById("correo").value;
         const tipos = Array.from(document.querySelectorAll('input[name="tipo"]:checked')).map(cb => cb.value);
@@ -370,8 +305,8 @@
             return;
         }
 
-        msg.className = "msg loading";
-        msg.innerHTML = "Procesando solicitud...";
+        msg.className = "msg";
+        msg.innerHTML = "Procesando...";
         btn.disabled = true;
 
         try {
@@ -381,7 +316,6 @@
                 body: JSON.stringify({ patente, correo, tipos })
             });
             if (!response.ok) throw new Error();
-
             document.getElementById("correo-confirmado").textContent = correo;
             document.getElementById("form-screen").style.display = "none";
             document.getElementById("success-screen").style.display = "block";
@@ -389,7 +323,6 @@
             msg.className = "msg error";
             msg.innerHTML = "Error de conexión. Intente nuevamente.";
         }
-
         btn.disabled = false;
     });
 
@@ -398,7 +331,6 @@
         document.getElementById("success-screen").style.display = "none";
         document.getElementById("form-screen").style.display = "block";
         document.getElementById("msg").innerHTML = "";
-        document.getElementById("msg").className = "msg";
     }
 </script>
 
