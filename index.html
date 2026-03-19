@@ -1,4 +1,185 @@
-/* Checkboxes tipo toggle profesional solo para Tipo de Documento */
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal de Documentos | Carflex</title>
+
+<style>
+:root{
+    --primary:#ff7225;
+    --primary-dark:#e65a15;
+    --text:#1f2937;
+    --muted:#6b7280;
+}
+
+/* RESET */
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Segoe UI, Tahoma, sans-serif;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+}
+
+/* FONDO */
+body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:url('fondo formulario.jpg') center/cover no-repeat;
+    filter:brightness(.55) blur(4px);
+    z-index:-1;
+}
+
+/* CARD */
+.card{
+    background:rgba(255,255,255,.97);
+    padding:40px;
+    border-radius:18px;
+    width:100%;
+    max-width:460px;
+    box-shadow:0 25px 50px rgba(0,0,0,.25);
+    text-align:center;
+    backdrop-filter:blur(6px);
+    animation:fade .4s ease;
+}
+
+/* LOGO */
+.logo{
+    width:160px;
+    margin-bottom:20px;
+}
+
+/* TITULOS */
+h2{
+    font-weight:600;
+    margin-bottom:8px;
+    color:var(--text);
+}
+
+.subtitle{
+    font-size:14px;
+    color:var(--muted);
+    margin-bottom:25px;
+}
+
+/* INPUTS */
+.input-group{
+    margin-bottom:18px;
+    text-align:left;
+}
+
+label{
+    font-size:12px;
+    font-weight:600;
+    color:#555;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    display:block;
+    margin-bottom:6px;
+}
+
+input[type=text], input[type=email], select{
+    width:100%;
+    padding:14px;
+    margin-top:6px;
+    border-radius:10px;
+    border:2px solid #eee;
+    font-size:15px;
+    outline:none;
+    transition:.3s;
+    background:#fff;
+}
+
+input:focus, select:focus{
+    border-color:var(--primary);
+}
+
+/* BOTONES */
+button{
+    width:100%;
+    padding:15px;
+    margin-top:10px;
+    border-radius:10px;
+    border:none;
+    background:var(--primary);
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:var(--primary-dark);
+    transform:translateY(-2px);
+}
+
+button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+    transform:none;
+}
+
+/* MENSAJES */
+.msg{
+    margin-top:18px;
+    font-size:14px;
+}
+
+.loading{color:#555;}
+
+.error{
+    background:#fdecea;
+    color:#b91c1c;
+    padding:12px;
+    border-radius:10px;
+}
+
+/* EXITO */
+.success-screen{
+    display:none;
+    text-align:center;
+}
+
+.success-icon{
+    font-size:50px;
+    margin-bottom:15px;
+}
+
+.success-screen h3{
+    color:#065f46;
+    margin-bottom:10px;
+}
+
+.success-screen p{
+    color:#444;
+    margin-bottom:20px;
+}
+
+.btn-secondary{
+    background:#333;
+}
+
+.btn-secondary:hover{
+    background:#111;
+}
+
+/* ANIMACION */
+@keyframes fade{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+/* CHECKBOXES TIPO DE DOCUMENTO PROFESIONAL */
 .checkbox-group{
     display:flex;
     gap:12px;
@@ -25,8 +206,152 @@
     min-width:120px;
 }
 
+/* Estilo verde claro al seleccionar */
 .checkbox-group input[type=checkbox]:checked + label{
-    border-color:#4CAF50;        /* Verde profesional */
-    background:#A8E6A2;          /* Verde claro de fondo */
-    color:#fff;                  /* Texto blanco */
+    border-color:#4CAF50;       /* borde verde */
+    background:#A8E6A2;         /* verde claro de fondo */
+    color:#fff;                 /* texto blanco */
 }
+
+/* RESPONSIVE */
+@media(max-width:480px){
+.card{
+    padding:30px 20px;
+}
+.checkbox-group{
+    flex-direction:column;
+    gap:10px;
+}
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<!-- FORMULARIO -->
+<div id="form-screen">
+
+<img src="Logo carflex.jpg" class="logo" alt="Carflex">
+
+<h2>Portal de Documentos</h2>
+<p class="subtitle">
+Solicite su documento ingresando la patente, su correo electrónico y el tipo de documento requerido.
+</p>
+
+<form id="form">
+
+<div class="input-group">
+<label>Patente</label>
+<input id="patente" type="text" placeholder="Ej: AB123C" maxlength="6" required autocomplete="off">
+</div>
+
+<div class="input-group">
+<label>Correo Electrónico</label>
+<input id="correo" type="email" placeholder="ejemplo@correo.com" required>
+</div>
+
+<div class="input-group">
+<label>Tipo de Documento</label>
+<div class="checkbox-group">
+  <input type="checkbox" id="tipoSOAP" name="tipo" value="SOAP">
+  <label for="tipoSOAP">SOAP</label>
+
+  <input type="checkbox" id="tipoPC" name="tipo" value="PC">
+  <label for="tipoPC">Permiso de Circulación</label>
+
+  <input type="checkbox" id="tipoMANT" name="tipo" value="MANTENCION">
+  <label for="tipoMANT">Certificado Última Mantención</label>
+</div>
+</div>
+
+<button type="submit" id="btn-submit">Solicitar Certificado</button>
+
+<div id="msg" class="msg"></div>
+
+</form>
+</div>
+
+<!-- EXITO -->
+<div id="success-screen" class="success-screen">
+<div class="success-icon">✅</div>
+<h3>Solicitud enviada correctamente</h3>
+<p>El certificado fue enviado al correo:<br><strong id="correo-confirmado"></strong></p>
+<button class="btn-secondary" onclick="resetForm()">Solicitar otro certificado</button>
+</div>
+
+</div>
+
+<script>
+const WEBHOOK_URL="https://uncollapsible-melodiously-chung.ngrok-free.dev/webhook/certificado";
+
+function normalizarPatente(v){
+    return v.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,6);
+}
+
+function patenteValida(p){
+    return /^[A-Z]{4}[0-9]{2}$/.test(p) ||
+           /^[A-Z]{2}[0-9]{4}$/.test(p) ||
+           /^[A-Z]{2}[0-9]{2}[A-Z]{2}$/.test(p);
+}
+
+const inputPatente=document.getElementById("patente");
+inputPatente.addEventListener("input", e => { e.target.value = normalizarPatente(e.target.value); });
+
+document.getElementById("form").addEventListener("submit", async e => {
+    e.preventDefault();
+
+    const msg = document.getElementById("msg");
+    const btn = document.getElementById("btn-submit");
+
+    const patente = inputPatente.value;
+    const correo = document.getElementById("correo").value;
+    const tipos = Array.from(document.querySelectorAll('input[name="tipo"]:checked')).map(cb => cb.value);
+
+    if(!patenteValida(patente)){
+        msg.className="msg error";
+        msg.innerHTML="Formato de patente inválido.";
+        return;
+    }
+
+    if(tipos.length === 0){
+        msg.className="msg error";
+        msg.innerHTML="Debe seleccionar al menos un tipo de documento.";
+        return;
+    }
+
+    msg.className="msg loading";
+    msg.innerHTML="Procesando solicitud...";
+    btn.disabled=true;
+
+    try{
+        const response = await fetch(WEBHOOK_URL,{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({patente, correo, tipos})
+        });
+        if(!response.ok) throw new Error();
+
+        document.getElementById("correo-confirmado").textContent = correo;
+        document.getElementById("form-screen").style.display = "none";
+        document.getElementById("success-screen").style.display = "block";
+    } catch(err){
+        msg.className="msg error";
+        msg.innerHTML="Error de conexión. Intente nuevamente.";
+    }
+
+    btn.disabled=false;
+});
+
+function resetForm(){
+    document.getElementById("form").reset();
+    document.getElementById("success-screen").style.display="none";
+    document.getElementById("form-screen").style.display="block";
+    document.getElementById("msg").innerHTML="";
+}
+</script>
+
+</body>
+</html>
